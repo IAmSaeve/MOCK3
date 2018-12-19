@@ -84,7 +84,7 @@ function DeleteMeassurement() {
 interface Imeassurement {
     id: number;
     pressure: string;
-    humidity: number;
+    humidity: string;
     temperature: string;
     timeStamp: string;
 }
