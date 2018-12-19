@@ -2,99 +2,89 @@
 import axios, { } from "../../node_modules/axios/index";
 
 // Variables
-const coinTable: HTMLTableElement = document.getElementById("coinTable") as HTMLTableElement;
-
-const getbtn: HTMLButtonElement = document.getElementById("getAllCoinsButton") as HTMLButtonElement;
-const postbtn: HTMLButtonElement = document.getElementById("postCoin") as HTMLButtonElement;
-const getOnebtn: HTMLButtonElement = document.getElementById("getACoin") as HTMLButtonElement;
-
-const getIdInput: HTMLInputElement = document.getElementById("coinId") as HTMLInputElement;
-
-const postCoinIdInput: HTMLInputElement = document.getElementById("postCoinId") as HTMLInputElement;
-const postCoinGenstandInput: HTMLInputElement = document.getElementById("postCoinGenstand") as HTMLInputElement;
-const postCoinBudInput: HTMLInputElement = document.getElementById("postCoinBud") as HTMLInputElement;
-const postCoinNavnInput: HTMLInputElement = document.getElementById("postCoinNavn") as HTMLInputElement;
+const meassurementsTable: HTMLTableElement = document.getElementById("meassurementsTable") as HTMLTableElement;
+const getbtn: HTMLButtonElement = document.getElementById("getAll") as HTMLButtonElement;
+const getOnebtn: HTMLButtonElement = document.getElementById("getA") as HTMLButtonElement;
+const getIdInput: HTMLInputElement = document.getElementById("meassurementId") as HTMLInputElement;
+const deletebtn: HTMLButtonElement = document.getElementById("removeM") as HTMLButtonElement;
+const deleteID: HTMLInputElement = document.getElementById("rmId") as HTMLInputElement;
 
 // URL to server
-const uri: string = "https://easj-mock2-2018.azurewebsites.net/api/coin/";
+const uri: string = "https://easj-mock3.azurewebsites.net/api/Meassurement/";
 
 // Event listeners
-getbtn.addEventListener("click", ShowAllCoins);
-getOnebtn.addEventListener("click", ShowACoin);
-postbtn.addEventListener("click", PostCoin);
+getbtn.addEventListener("click", ShowAllMeassurements);
+getOnebtn.addEventListener("click", ShowAMeassurement);
+deletebtn.addEventListener("click", DeleteMeassurement);
 
-function ShowAllCoins() {
-    axios.get<ICoin[]>(uri)
+function ShowAllMeassurements() {
+    axios.get<Imeassurement[]>(uri)
         .then((response) => {
             // Clears list on button press
-            coinTable.innerHTML = "";
+            meassurementsTable.innerHTML = "";
 
             // Loop data in array and add to HTML table
-            response.data.forEach((c: ICoin) => {
-                const row = coinTable.insertRow();
+            response.data.forEach((c: Imeassurement) => {
+                const row = meassurementsTable.insertRow();
 
-                const ID = row.insertCell();
-                const GENSTAND = row.insertCell();
-                const BUD = row.insertCell();
-                const NAVN = row.insertCell();
+                const i = row.insertCell();
+                const h = row.insertCell();
+                const p = row.insertCell();
+                const t = row.insertCell();
+                const ts = row.insertCell();
 
-                ID.innerText = c.id.toString();
-                GENSTAND.innerText = c.genstand.toString();
-                BUD.innerText = c.bud.toString();
-                NAVN.innerText = c.navn.toString();
+                i.innerText = c.id.toString();
+                h.innerText = c.humidity.toString();
+                p.innerText = c.pressure.toString();
+                t.innerText = c.temperature.toString();
+                ts.innerText = c.timeStamp.toString();
             });
         }).catch((error) => {
             console.error(error);
         });
 }
 
-function ShowACoin() {
-    axios.get<ICoin>(uri + getIdInput.valueAsNumber)
+function ShowAMeassurement() {
+    axios.get<Imeassurement>(uri + getIdInput.valueAsNumber)
         .then((response) => {
             // Clears list on button press
-            coinTable.innerHTML = "";
+            meassurementsTable.innerHTML = "";
 
             // Loop data in array and add to HTML table
-            const c: ICoin = response.data;
-            const row = coinTable.insertRow();
+            const c: Imeassurement = response.data;
+            const row = meassurementsTable.insertRow();
 
-            const ID = row.insertCell();
-            const GENSTAND = row.insertCell();
-            const BUD = row.insertCell();
-            const NAVN = row.insertCell();
+            const i = row.insertCell();
+            const h = row.insertCell();
+            const p = row.insertCell();
+            const t = row.insertCell();
+            const ts = row.insertCell();
 
-            ID.innerText = c.id.toString();
-            GENSTAND.innerText = c.genstand.toString();
-            BUD.innerText = c.bud.toString();
-            NAVN.innerText = c.navn.toString();
+            i.innerText = c.id.toString();
+            h.innerText = c.humidity.toString();
+            p.innerText = c.pressure.toString();
+            t.innerText = c.temperature.toString();
+            ts.innerText = c.timeStamp.toString();
         }).catch((error) => {
             console.error(error);
         });
 }
 
-function PostCoin() {
-    // Construct data to send
-    const data: ICoin = {
-        id: postCoinIdInput.valueAsNumber,
-        genstand: postCoinGenstandInput.value,
-        bud: postCoinBudInput.valueAsNumber,
-        navn: postCoinNavnInput.value,
-    };
-
-    // Send data
-    axios.post(uri, data).catch((error) => console.error(error));
-
-    // Clear input fields
-    postCoinIdInput.value = "";
-    postCoinGenstandInput.value = "";
-    postCoinBudInput.value = "";
-    postCoinNavnInput.value = "";
+function DeleteMeassurement() {
+    axios.delete(uri + deleteID.valueAsNumber)
+    .then(() => {
+        ShowAllMeassurements();
+    })
+    .catch((e) => {
+        console.error(e);
+    });
 }
 
-// Coin interface
-interface ICoin {
+// meassurement interface
+interface Imeassurement {
     id: number;
-    genstand: string;
-    bud: number;
-    navn: string;
+    pressure: string;
+    humidity: number;
+    temperature: string;
+    timeStamp: string;
 }

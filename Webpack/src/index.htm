@@ -3,34 +3,32 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>MOCK 2</title>
+  <title>MOCK 3</title>
   <link rel="stylesheet" type="text/css" href="bundle.css">
 </head>
 
 <body>
   <div>
-    <h2>List of coins</h2>
-    <button id="getAllCoinsButton"> Get all coins </button> <br>
-    <input type="number" name="Id" id="coinId" placeholder="Id">
-    <button id="getACoin"> Get a coin </button>
+    <h2>List of meassurements</h2>
+    <button id="getAll"> Get all meassurements </button> <br>
+    <input type="number" name="Id" id="meassurementId" placeholder="ID">
+    <button id="getA"> Get a meassurements </button>
     <table>
       <thead>
         <th>ID:</th>
-        <th>Genstand:</th>
-        <th>Bud i US$:</th>
-        <th>Navn:</th>
+        <th>Presure:</th>
+        <th>Humidity:</th>
+        <th>Temperature:</th>
+        <th>TimeStamp:</th>
       </thead>
-      <tbody id="coinTable"></tbody>
+      <tbody id="meassurementsTable"></tbody>
     </table>
   </div>
 
   <div>
-    <h2>Post coin</h2>
-    <input type="number" name="Id" id="postCoinId" placeholder="Id"> <br>
-    <input type="text" name="Genstand" id="postCoinGenstand" placeholder="Genstand"> <br>
-    <input type="number" name="Bud" id="postCoinBud" placeholder="Bud i US$"> <br>
-    <input type="text" name="Navn" id="postCoinNavn" placeholder="Navn"> <br>
-    <button id="postCoin">Post coin</button>
+    <h2>Delete meassurement</h2>
+    <input type="number" name="mId" id="rmId" placeholder="ID">
+    <button id="removeM">Delete</button>
   </div>
   <script src="bundle.js"></script>
 </body>
