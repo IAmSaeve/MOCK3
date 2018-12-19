@@ -25,6 +25,7 @@ namespace webservice
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -39,6 +40,11 @@ namespace webservice
             {
                 app.UseHsts();
             }
+
+            app.UseCors(options => 
+            { 
+                options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); // allow everything from anywhere
+            });
 
             app.UseHttpsRedirection();
             app.UseMvc();
